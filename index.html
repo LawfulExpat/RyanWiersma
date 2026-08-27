@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ryan Wiersma – Documentation</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --card: #1a2332;
+      --text: #e7ecf3;
+      --muted: #8b9bb4;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --border: #2d3a4f;
+      --warning: #f59e0b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      padding: 2rem 1rem 4rem;
+    }
+    .container { max-width: 860px; margin: 0 auto; }
+    header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+    }
+    .lang-switch {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      gap: 0.35rem;
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.25rem;
+    }
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .lang-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
+    .lang-btn:hover:not(.active) { color: var(--text); }
+    .profile-photo {
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent);
+      margin-bottom: 1.25rem;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    }
+    h1 {
+      font-size: 1.55rem;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 0.75rem;
+    }
+    .subtitle { color: var(--muted); font-size: 0.95rem; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+    h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    p, li { margin-bottom: 0.75rem; }
+    ul { list-style: none; padding-left: 0; }
+    ul li {
+      padding-left: 1.25rem;
+      position: relative;
+      margin-bottom: 0.5rem;
+    }
+    ul li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      word-break: break-all;
+    }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .link-card {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      transition: border-color 0.2s;
+    }
+    .link-card:hover { border-color: var(--accent); }
+    .link-card a { font-weight: 500; display: block; }
+    .link-card span {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 177.77%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 12px;
+      margin: 1rem auto;
+      background: #000;
+      max-width: 360px;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+    .tweet-img {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin: 1rem 0;
+      display: block;
+    }
+    .timestamps {
+      font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
+      font-size: 0.88rem;
+    }
+    .timestamps li { margin-bottom: 0.9rem; line-height: 1.5; }
+    .timestamps strong { color: var(--warning); font-weight: 600; }
+    .note {
+      background: rgba(245, 158, 11, 0.1);
+      border-left: 3px solid var(--warning);
+      padding: 0.85rem 1rem;
+      margin: 1rem 0;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.95rem;
+      color: #fcd34d;
+    }
+    .map-embed {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-top: 1rem;
+    }
+    .map-embed iframe {
+      width: 100%;
+      height: 320px;
+      border: 0;
+      display: block;
+    }
+    .coords {
+      font-family: ui-monospace, monospace;
+      background: #0d1117;
+      padding: 0.35rem 0.6rem;
+      border-radius: 6px;
+      display: inline-block;
+      margin: 0.5rem 0;
+    }
+    footer {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+    .platform {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+    [data-lang] { display: none; }
+    html[lang="es"] [data-lang="es"],
+    html[lang="en"] [data-lang="en"] { display: block; }
+    html[lang="es"] span[data-lang="es"],
+    html[lang="en"] span[data-lang="en"],
+    html[lang="es"] a[data-lang="es"],
+    html[lang="en"] a[data-lang="en"],
+    html[lang="es"] strong[data-lang="es"],
+    html[lang="en"] strong[data-lang="en"] { display: inline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="lang-switch">
+        <button class="lang-btn active" data-set-lang="es" onclick="setLang('es')">ES</button>
+        <button class="lang-btn" data-set-lang="en" onclick="setLang('en')">EN</button>
+      </div>
+
+      <img src="https://yt3.googleusercontent.com/cz5CEf0D2r6UCJU6LsZeHmYRSVwq79S0W_EXLNQ8I1s2HTDD4yEwmqJtAFGc3OqsN2uLuht8GWU=s800-c-k-c0x00ffffff-no-rj" 
+           alt="Ryan Wiersma" 
+           class="profile-photo"
+           width="140" height="140"
+           onerror="this.src='https://yt3.googleusercontent.com/cz5CEf0D2r6UCJU6LsZeHmYRSVwq79S0W_EXLNQ8I1s2HTDD4yEwmqJtAFGc3OqsN2uLuht8GWU=s800-c-k-c0x00ffffff-no-rj'">
+
+      <h1 data-lang="es">Ryan Wiersma, el canadiense que enseña a los extranjeros cómo sobornar para obtener permisos de construcción y de armas si no quieren someterse a un examen psicológico.</h1>
+      <h1 data-lang="en">Ryan Wiersma - the Canadian who teaches foreigners how to bribe for building and weapons permits if they don’t want to take a psychological exam.</h1>
+
+      <p class="subtitle" data-lang="es">Documentación compilada a partir de transmisiones en vivo, redes sociales y declaraciones públicas.</p>
+      <p class="subtitle" data-lang="en">Documentation compiled from live streams, social media and public statements.</p>
+    </header>
+
+    <section>
+      <h2 data-lang="es">👤 Perfil</h2>
+      <h2 data-lang="en">👤 Profile</h2>
+      <p>
+        <strong data-lang="es">Nombre:</strong>
+        <strong data-lang="en">Name:</strong> Ryan Wiersma
+      </p>
+      <p>
+        <strong data-lang="es">Origen:</strong>
+        <strong data-lang="en">From:</strong> Edmonton, Alberta, Canada
+      </p>
+      <p>
+        <strong data-lang="es">Residencia:</strong>
+        <strong data-lang="en">Living in:</strong> Manglaralto, Ecuador
+      </p>
+    </section>
+
+    <section>
+      <h2 data-lang="es">📱 Redes sociales</h2>
+      <h2 data-lang="en">📱 His socials</h2>
+      <div class="link-grid">
+        <div class="link-card">
+          <span class="platform">YouTube · 2.6K</span>
+          <a href="https://youtube.com/@wiersmerica" target="_blank" rel="noopener">@wiersmerica</a>
+        </div>
+        <div class="link-card">
+          <span class="platform">Instagram</span>
+          <a href="https://www.instagram.com/_ryanwiersma_/" target="_blank" rel="noopener">@_ryanwiersma_</a>
+        </div>
+        <div class="link-card">
+          <span class="platform">TikTok · 32.7K</span>
+          <a href="https://www.tiktok.com/@ryanwiersma" target="_blank" rel="noopener">@ryanwiersma</a>
+        </div>
+        <div class="link-card">
+          <span class="platform">Facebook</span>
+          <a href="https://www.facebook.com/ryan.wiersma.7/" target="_blank" rel="noopener">ryan.wiersma.7</a>
+        </div>
+        <div class="link-card">
+          <span class="platform">Facebook Business</span>
+          <a href="https://www.facebook.com/p/BrickHouse-Life-In-Ecuador-61583870366766/" target="_blank" rel="noopener">BrickHouse – Life In Ecuador</a>
+        </div>
+        <div class="link-card">
+          <span class="platform">X / Twitter</span>
+          <a href="https://x.com/Wiersmerica" target="_blank" rel="noopener">@Wiersmerica</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-lang="es">🌐 Sitio web (monetización)</h2>
+      <h2 data-lang="en">🌐 His website where he monetizes this escapade</h2>
+      <div class="link-grid">
+        <div class="link-card">
+          <a href="https://www.ryan-wiersma.com/register" target="_blank" rel="noopener">Register</a>
+          <span>ryan-wiersma.com/register</span>
+        </div>
+        <div class="link-card">
+          <a href="https://www.ryan-wiersma.com/vip" target="_blank" rel="noopener">VIP</a>
+          <span>ryan-wiersma.com/vip</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-lang="es">🎬 Vídeo corto – Se jacta abiertamente de que el soborno es genial en Ecuador</h2>
+      <h2 data-lang="en">🎬 Short-form video where he openly brags about bribery being great in Ecuador</h2>
+      <p data-lang="es">Vídeo corto en el que se jacta abiertamente de que el soborno es genial en Ecuador (todos estos enlaces son el mismo vídeo en distintas plataformas):</p>
+      <p data-lang="en">Short-form video where he openly brags about bribery being great in Ecuador (all these links are the same video just on different platforms):</p>
+      
+      <div class="video-wrapper">
+        <iframe 
+          src="https://www.youtube.com/embed/M9E29UwGqww" 
+          title="Ryan Wiersma short"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+
+      <div class="link-grid">
+        <div class="link-card">
+          <a href="https://www.tiktok.com/@ryanwiersma/video/7640888031028743431" target="_blank" rel="noopener">TikTok</a>
+        </div>
+        <div class="link-card">
+          <a href="https://www.instagram.com/reel/DYcfwv0A9dt" target="_blank" rel="noopener">Instagram</a>
+        </div>
+        <div class="link-card">
+          <a href="https://www.facebook.com/reel/1528440772026258" target="_blank" rel="noopener">Facebook (1)</a>
+        </div>
+        <div class="link-card">
+          <a href="https://www.facebook.com/reel/839663119204492" target="_blank" rel="noopener">Facebook (2)</a>
+        </div>
+        <div class="link-card">
+          <a href="https://m.youtube.com/shorts/M9E29UwGqww" target="_blank" rel="noopener">YouTube Shorts</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-lang="es">💬 Declaración sobre corrupción</h2>
+      <h2 data-lang="en">💬 Tweet (Deleted)</h2>
+      <p data-lang="es">Captura del tweet (ahora eliminado) donde compara la corrupción de Ecuador con la de Canadá:</p>
+      <p data-lang="en">Screenshot of the deleted tweet:</p>
+      <img src="https://pbs.twimg.com/media/HQAKrrHW4AAD0yR.jpg" 
+           alt="Tweet by Ryan Wiersma about corruption in Ecuador" 
+           class="tweet-img"
+           loading="lazy">
+      <p style="font-size:0.9rem; color:var(--muted);">
+        “The best thing about the corruption in Ecuador compared to Canada. Is at least in Ecuador the corruption’s accessible to everybody. Not just the elite.”
+      </p>
+      <p>
+        <a href="https://x.com/Wiersmerica/status/2058635529554424267" target="_blank" rel="noopener">x.com/Wiersmerica/status/2058635529554424267</a>
+      </p>
+    </section>
+
+    <section>
+      <h2 data-lang="es">📹 Fragmentos del Facebook Live</h2>
+      <h2 data-lang="en">📹 Facebook Live excerpts</h2>
+      <p data-lang="es"><strong>Clips del Facebook Live</strong> (solo fragmentos):</p>
+      <p data-lang="en"><strong>Facebook Live clips</strong> (excerpts only):</p>
+      <div class="link-grid">
+        <div class="link-card">
+          <a href="https://www.tiktok.com/@mrpoptartheaven/video/7669212741294476575" target="_blank" rel="noopener">TikTok – @mrpoptartheaven</a>
+          <span data-lang="es">Solo clips</span>
+          <span data-lang="en">Clips only</span>
+        </div>
+      </div>
+
+      <p style="margin-top: 1.25rem;" data-lang="es"><strong>Transmisión completa grabada</strong> (archivo completo recuperado de un amigo):</p>
+      <p style="margin-top: 1.25rem;" data-lang="en"><strong>Full recorded livestream</strong> (complete file recovered from a friend):</p>
+      <div class="link-grid">
+        <div class="link-card">
+          <a href="https://drive.google.com/file/d/1uSxvMGJbjnxpmFgXTKNy3JFJWDnyVuKR/view?usp=drivesdk" target="_blank" rel="noopener">Google Drive – Full livestream</a>
+          <span data-lang="es">Archivo completo</span>
+          <span data-lang="en">Full recording</span>
+        </div>
+      </div>
+
+      <h3 style="margin: 1.5rem 0 0.75rem; font-size: 1rem; color: var(--muted);">
+        <span data-lang="es">Marcas de tiempo relevantes</span>
+        <span data-lang="en">Timestamps</span>
+      </h3>
+      <ul class="timestamps">
+        <li><strong>0:52:40</strong> – <span data-lang="es">Hablando de sobornos a policías</span><span data-lang="en">talking about bribery to cops</span></li>
+        <li><strong>0:54:40</strong> – <span data-lang="es">Hablar de sobornos para obtener permisos de construcción y decir que es solo para ahorrar tiempo</span><span data-lang="en">talking about bribery for building permits and saying it’s just to save time</span></li>
+        <li><strong>0:56:10</strong> – <span data-lang="es">Se responde a la pregunta sobre el soborno</span><span data-lang="en">bribery question answered</span></li>
+        <li><strong>0:58:43</strong> – <span data-lang="es">Soborno. Dice que tiene “especialistas” que se encargan de los permisos de construcción.</span><span data-lang="en">Bribery. He says he has “specialists” who take care of it for building permits.</span></li>
+        <li><strong>0:59:27</strong> – <span data-lang="es">Aconsejar el uso de sobornos para obtener armas de fuego</span><span data-lang="en">advising to use bribery to obtain firearms</span></li>
+        <li><strong>1:00:50</strong> – <span data-lang="es">Dice que no tenía documentos mientras andaba en bicicleta y que tuvo que sobornar para evitar la multa.</span><span data-lang="en">says he didn’t have documents while riding bike and had to bribe to get out of ticket</span></li>
+        <li><strong>1:01:40</strong> – <span data-lang="es">«Sin duda podemos sobornar para obtener los permisos si es necesario. No les voy a mentir, chicos, la casa en la que estoy ahora mismo no tiene permisos. Y cuando los necesite, simplemente pagaré a alguien».</span><span data-lang="en">“we can definitely bribe for permits if we need. I’m not going to lie guys the house I’m in right now this house has no permits. And when I need them I’m just going to pay someone.”</span></li>
+        <li><strong>1:02:50</strong> – <span data-lang="es">Soborno para obtener un arma de fuego nuevamente</span><span data-lang="en">bribery to obtain firearm again</span></li>
+        <li><strong>1:03:10</strong> – <span data-lang="es">Responde a la pregunta “ohhh, ¿entonces te encargas de ‘comprar el café’ para los funcionarios? Así que no tenemos que preocuparnos por eso”.</span><span data-lang="en">answers question “ohhh so you take care of “buying the coffee” for the officials? So we don’t have to worry about it”.</span></li>
+        <li><strong>1:03:40</strong> – <span data-lang="es">Ofrece poner en contacto a alguien con otra persona para hablar sobre armas.</span><span data-lang="en">offers to hook someone up with someone to talk to about guns</span></li>
+        <li><strong>1:04:20</strong> – <span data-lang="es">Aconseja a alguien que trabaje ilegalmente con una visa de turista.</span><span data-lang="en">advises someone to illegally work on tourist visa</span></li>
+        <li><strong>1:05:40</strong> – <span data-lang="es">Dice que tiene problemas con la visa.</span><span data-lang="en">He says he is having visa issues</span></li>
+        <li><strong>1:08:10</strong> – <span data-lang="es">Responde qué visa tiene</span><span data-lang="en">answers what visa he is on</span></li>
+        <li><strong>1:09:47</strong> – <span data-lang="es">Habla de “hacer que las cosas sucedan” con sus alojamientos de Airbnb que está construyendo tras construir sin permisos.</span><span data-lang="en">talks about “making it happen” for his AirBNBs he’s building after building without permits.</span></li>
+        <li><strong>1:10:45</strong> – <span data-lang="es">Da el ejemplo de usar a un especialista llamado "José" para "problemas con permisos de construcción". Es muy probable que se refiera a su buen amigo José Alejandro Vivar (un exlíder de pandillas convicto que ahora tiene un negocio de Airbnb en Quito. Fue acusado y absuelto de asesinato en primer grado en 2002/2004. En 2007, José fue condenado como resultado del Proyecto Cheddar, incluyendo posesión de armas de fuego restringidas con municiones, tráfico de armas de fuego y armas prohibidas, y posesión de cocaína y marihuana).</span><span data-lang="en">gives example of using a specialist “jose” for “building permit problem”. Highly likely a reference to his good friend Jose Alejandro Vivar (a former convicted gang leader who now has an Airbnb business in Quito. He was charged and acquitted of 1st degree murder in 2002/2004. In 2007, Jose was convicted as a result of Project Cheddar, including possession of restricted firearms with ammunition, trafficking in firearms and prohibited weapons, and possession of cocaine and marijuana.)</span></li>
+        <li><strong>1:16:00</strong> – <span data-lang="es">Dice que está construyendo Airbnbs que son para alquilar</span><span data-lang="en">says that he is building Airbnbs that are rentals</span></li>
+      </ul>
+
+      <p style="margin-top: 1.25rem;">
+        <span data-lang="es">Enlace original a la transmisión en vivo de Facebook (ahora eliminada):</span>
+        <span data-lang="en">Original link to Facebook LIVE where he admits this (now deleted):</span>
+      </p>
+      <p><a href="https://www.facebook.com/61583870366766/videos/2048097232486380/" target="_blank" rel="noopener">facebook.com/.../videos/2048097232486380/</a></p>
+    </section>
+
+    <section>
+      <h2>Extra</h2>
+      <p data-lang="es">Su amigo <strong>José Alejandro Vivar</strong> aparece varias veces en su perfil. Son buenos amigos. José tiene un negocio de Airbnb en Quito y es un delincuente convicto en Canadá. Posee doble nacionalidad canadiense y ecuatoriana.</p>
+      <p data-lang="en">His friend Jose Alejandro Vivar is featured many times on his profile. They are good friends. Jose owns an Airbnb business in Quito and is a convicted criminal in Canada. Jose is a dual Canadian-Ecuadorian citizen.</p>
+      <p>
+        <span data-lang="es">Instagram de José:</span>
+        <span data-lang="en">Jose’s Instagram:</span>
+        <a href="https://instagram.com/_alejandrovivar_/" target="_blank" rel="noopener">instagram.com/_alejandrovivar_/</a>
+      </p>
+
+      <div class="note">
+        <span data-lang="es">Ryan dice que colonizar países del tercer mundo es bueno:</span>
+        <span data-lang="en">Ryan says colonizing 3rd world countries is good:</span><br>
+        <a href="https://www.tiktok.com/@ryanwiersma/video/7206056051131665670" target="_blank" rel="noopener">TikTok</a>
+      </div>
+
+      <p data-lang="es">Tras ser descubierto, publicó esto calificando al 99% de la población de Ecuador de "retrasada".</p>
+      <p data-lang="en">After being exposed, he posted this calling 99% of the population in Ecuador “retarded”.</p>
+    </section>
+
+    <section>
+      <h2 data-lang="es">📍 Ubicación del asentamiento</h2>
+      <h2 data-lang="en">📍 Location of illegal settlement</h2>
+      <p data-lang="es">Asentamiento ilegal en Manglaralto, Ecuador:</p>
+      <p data-lang="en">Location of illegal settlement in Manglaralto, Ecuador:</p>
+      <p class="coords">-1.8528527, -80.7417518</p>
+      <div class="map-embed">
+        <iframe 
+          src="https://maps.google.com/maps?q=-1.8528527,-80.7417518&z=15&output=embed" 
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Location in Manglaralto, Ecuador">
+        </iframe>
+      </div>
+      <p style="margin-top: 0.75rem;">
+        <a href="https://www.google.com/maps?q=-1.8528527,-80.7417518" target="_blank" rel="noopener">
+          <span data-lang="es">Abrir en Google Maps →</span>
+          <span data-lang="en">Open in Google Maps →</span>
+        </a>
+      </p>
+    </section>
+
+    <footer>
+      <span data-lang="es">Página generada a partir de los documentos de Google Docs.<br>Contenido presentado con fines informativos. Todas las imágenes y vídeos son de fuentes públicas.</span>
+      <span data-lang="en">Page generated from the Google Docs documents.<br>Content presented for informational purposes. All images and videos are from public sources.</span>
+    </footer>
+  </div>
+
+  <script>
+    function setLang(lang) {
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.setLang === lang);
+      });
+      localStorage.setItem('lang', lang);
+    }
+    const saved = localStorage.getItem('lang') || 'es';
+    setLang(saved);
+  </script>
+</body>
+</html>
